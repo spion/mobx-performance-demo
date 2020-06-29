@@ -36,9 +36,7 @@ class AppView extends React.Component<{ app: AppState }> {
         {this.props.app.counterList.map(counter => (
           <CounterView
             key={counter.name}
-            name={counter.name}
-            value={counter.value}
-            increment={() => counter.increment()}
+            counter={counter}
           />
         ))}
         <p>
@@ -50,14 +48,15 @@ class AppView extends React.Component<{ app: AppState }> {
   }
 }
 
-class CounterView extends React.Component<{ value: number; name: string; increment: () => void }> {
+class CounterView extends React.Component<{counter: Counter}> {
   render() {
-    console.log('Rendering individual counter', this.props.name);
+    let c = this.props.counter;
+    console.log('Rendering individual counter', c.name);
     return (
       <div>
-        <span>{this.props.name} = </span>
-        <span>{this.props.value}</span>{" "}
-        <button onClick={this.props.increment}>Increment</button>
+        <span>{c.name} = </span>
+        <span>{c.value}</span>{" "}
+        <button onClick={() => c.increment()}>Increment</button>
       </div>
     );
   }
