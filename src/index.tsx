@@ -17,7 +17,9 @@ class Counter {
 class AppState {
   @observable counterList: Counter[] = [];
   @action add() {
-    this.counterList.push(new Counter());
+    let c = new Counter();
+    this.counterList.push(c);
+    c.name = 'Counter ' + this.counterList.length;
   }
   @action removeLast() {
     this.counterList.pop();
@@ -27,11 +29,13 @@ class AppState {
 @observer
 class AppView extends React.Component<{ app: AppState }> {
   render() {
+    console.log('Re-rendering app');
     return (
       <div>
         <p>Welcome to the counter app</p>
         {this.props.app.counterList.map(counter => (
           <CounterView
+            key={counter.name}
             name={counter.name}
             value={counter.value}
             increment={() => counter.increment()}
@@ -48,10 +52,11 @@ class AppView extends React.Component<{ app: AppState }> {
 
 class CounterView extends React.Component<{ value: number; name: string; increment: () => void }> {
   render() {
+    console.log('Rendering individual counter', this.props.name);
     return (
       <div>
-        <span>Counter: {this.props.name} =</span>
-        <span>{this.props.value}</span>
+        <span>{this.props.name} = </span>
+        <span>{this.props.value}</span>{" "}
         <button onClick={this.props.increment}>Increment</button>
       </div>
     );
