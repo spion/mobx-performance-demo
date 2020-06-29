@@ -48,6 +48,7 @@ class AppView extends React.Component<{ app: AppState }> {
   }
 }
 
+@observer
 class CounterView extends React.Component<{counter: Counter}> {
   render() {
     let c = this.props.counter;
