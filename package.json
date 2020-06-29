@@ -1,0 +1,22 @@
+{
+  "name": "mobx-short-circut-tree-validation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "@types/react": "16.9.41",
+    "@types/react-dom": "16.9.8",
+    "mobx": "4.15.4",
+    "mobx-react": "6.2.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.6.1"
+  },
+  "keywords": []
+}
