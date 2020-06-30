@@ -1,4 +1,4 @@
-import { observable, computed, action, trace } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import * as RD from 'react-dom';
@@ -55,7 +55,6 @@ class AppView extends React.Component<{ app: AppState }> {
 @observer
 class CounterView extends React.Component<{counter: Counter}> {
   render() {
-    trace(true);
     let c = this.props.counter;
     console.log('Rendering individual counter', c.name);
     return (
