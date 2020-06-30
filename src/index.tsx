@@ -2,7 +2,6 @@ import { observable, computed, action } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import * as RD from "react-dom";
-import { render } from "../dist/src.fc45d0fd";
 
 class Counter {
   @observable name = "A counter";
@@ -49,7 +48,7 @@ class AppView extends React.Component<{ app: AppState }> {
         {this.props.app.counterList.map((counter) => (
           <CounterView key={counter.name} counter={counter} />
         ))}
-        <CounterReport report={this.props.app.report} />
+        <CounterReport report={() => this.props.app.report} />
         <p>
           <button onClick={() => this.props.app.add()}>Add counter</button>
           <button onClick={() => this.props.app.removeLast()}>Remove counter</button>
@@ -73,9 +72,9 @@ class CounterView extends React.Component<{ counter: Counter }> {
 }
 
 @observer
-class CounterReport extends React.Component<{ report: string }> {
+class CounterReport extends React.Component<{ report: () => string }> {
   render() {
-    return <p>{this.props.report}</p>;
+    return <p>{this.props.report()}</p>;
   }
 }
 
