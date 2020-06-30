@@ -28,6 +28,14 @@ class AppState {
   @action removeLast() {
     this.counterList.pop();
   }
+
+  @computed get sum() {
+    return this.counterList.map(c => c.value).reduce((a, b) => a + b, 0);
+  }
+
+  @computed get report() {
+    return `Total counters ${this.counterList.length}, total sum ${this.sum}`
+  }
 }
 
 @observer
@@ -43,6 +51,9 @@ class AppView extends React.Component<{ app: AppState }> {
             counter={counter}
           />
         ))}
+        <p>
+          {this.props.app.report}
+        </p>
         <p>
           <button onClick={() => this.props.app.add()}>Add counter</button>
           <button onClick={() => this.props.app.removeLast()}>Remove counter</button>
