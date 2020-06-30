@@ -33,8 +33,8 @@ class AppState {
     return this.counterList.map((c) => c.value).reduce((a, b) => a + b, 0);
   }
 
-  @computed get report() {
-    return `Total counters ${this.counterList.length}, total sum ${this.sum}`;
+  @computed get count() {
+    return this.counterList.length;
   }
 }
 
@@ -48,7 +48,10 @@ class AppView extends React.Component<{ app: AppState }> {
         {this.props.app.counterList.map((counter) => (
           <CounterView key={counter.name} counter={counter} />
         ))}
-        <CounterReport report={() => this.props.app.report} />
+        <p>
+          Total counters <Computation compute={() => this.props.app.count} />, total count{" "}
+          <Computation compute={() => this.props.app.sum} />
+        </p>
         <p>
           <button onClick={() => this.props.app.add()}>Add counter</button>
           <button onClick={() => this.props.app.removeLast()}>Remove counter</button>
@@ -72,9 +75,9 @@ class CounterView extends React.Component<{ counter: Counter }> {
 }
 
 @observer
-class CounterReport extends React.Component<{ report: () => string }> {
+class Computation extends React.Component<{ compute: () => any }> {
   render() {
-    return <p>{this.props.report()}</p>;
+    return <>{this.props.compute()}</>;
   }
 }
 
