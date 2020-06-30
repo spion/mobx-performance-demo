@@ -48,10 +48,16 @@ class AppView extends React.Component<{ app: AppState }> {
         {this.props.app.counterList.map((counter) => (
           <CounterView key={counter.name} counter={counter} />
         ))}
-        <p>
-          Total counters <Computation compute={() => this.props.app.count} />, total count{" "}
-          <Computation compute={() => this.props.app.sum} />
-        </p>
+
+        <LazyProps
+          props={() => ({ count: this.props.app.count, total: this.props.app.sum })}
+          component={(props) => (
+            <p>
+              Total counters {props.count}, total sum {props.total}
+            </p>
+          )}
+        />
+
         <p>
           <button onClick={() => this.props.app.add()}>Add counter</button>
           <button onClick={() => this.props.app.removeLast()}>Remove counter</button>
@@ -71,6 +77,16 @@ class CounterView extends React.Component<{ counter: Counter }> {
         <span>{c.report}</span> <button onClick={() => c.increment()}>Increment</button>
       </div>
     );
+  }
+}
+
+@observer
+class LazyProps<T> extends React.Component<{ props: () => T; component: React.ComponentType<T> }> {
+  render() {
+    let Component = this.props.component;
+    console.log("Re-rendering", Component.displayName);
+    let props = this.props.props();
+    return <Component {...props} />;
   }
 }
 
