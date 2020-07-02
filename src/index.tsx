@@ -49,14 +49,10 @@ class AppView extends React.Component<{ app: AppState }> {
           <CounterView key={counter.name} counter={counter} />
         ))}
 
-        <LazyProps
-          props={() => ({ count: this.props.app.count, total: this.props.app.sum })}
-          component={(props) => (
-            <p>
-              Total counters {props.count}, total sum {props.total}
-            </p>
-          )}
-        />
+        <p>
+          Total counters <Computation compute={() => this.props.app.count} />, total sum{" "}
+          <Computation compute={() => this.props.app.sum} />
+        </p>
 
         <p>
           <button onClick={() => this.props.app.add()}>Add counter</button>
@@ -93,7 +89,7 @@ class LazyProps<T> extends React.Component<{ props: () => T; component: React.Co
 @observer
 class Computation extends React.Component<{ compute: () => any }> {
   render() {
-    return <>{this.props.compute()}</>;
+    return <span>{this.props.compute()}</span>;
   }
 }
 
